@@ -1,0 +1,8 @@
+---
+plugin: ansible.network.etc_hosts
+file_path: hosts
+compose:
+  datacenter: inventory_hostsname
+#groups:
+#  osp16: True
+
