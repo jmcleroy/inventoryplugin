@@ -40,8 +40,8 @@ class InventoryModule(BaseFileInventoryPlugin, Constructable):
     NAME = 'ansible.network.etc_hosts'
 
     def verify_file(self, path):
-      super(InventoryModule, self).verify_file(path)
-      return path.endswith(('etc_hosts.yml', 'etc_hosts.yaml'))
+        super(InventoryModule, self).verify_file(path)
+        return path.endswith(('etc_hosts.yml', 'etc_hosts.yaml'))
 
     def parse(self, inventory, loader, path, cache=True):
         super(InventoryModule, self).parse(inventory, loader, path)
@@ -59,6 +59,7 @@ class InventoryModule(BaseFileInventoryPlugin, Constructable):
             group_name = re.split("\.|-", group_name)[1].rstrip('0123456789')
             self.inventory.add_group(group_name)
             host_name = self.inventory.add_host(line.split(' ')[1].strip(), group_name)
+            self.inventory.set_variable(host_name, 'ansible_host' , line.split()[0])
         # Set variables for each host
 #            self._set_composite_vars(self.get_option('compose'), self.inventory.get_host(host_name).get_vars(), host_name, self.get_option('strict'))
 #            self._add_host_to_composed_groups(self.get_option('groups'), dict(), host_name, self.get_option('strict'))
